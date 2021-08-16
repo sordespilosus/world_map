@@ -1,9 +1,6 @@
-var poly;
-var country;
-
+var title = '';
 
 $(document).ready(() => {
-  let $offset
 
   $('#night').click(function(){
     $('body').css('background', 'radial-gradient(circle, rgba(43,34,105,1) 0%, rgba(2,0,59,1) 100%)');
@@ -24,49 +21,39 @@ $(document).ready(() => {
     $('path[title *= "rus"]').css('display', 'none');
     $('path[title *= "eng"]').css('display', 'block');
   });
-
-	$('path').attr('fill', '#ffffff'); //устанаваливаем цвет для полигонов, через css это сделать нельзя
   
-
-  const string = $(this).attr('title');
-  const substring = 'rus';
-
   $('path[title *= "rus"]').css('display', 'none');
 
-	$('.shadowed').mouseout(
-		function(){
-			$(this).attr('filter', '');
-		}
-	)
-
-    $('#world_map_countries path').click(function(e) { //при клике на любую страну
-		let offset = $(this).offset(); //создаем переменную offset
-		poly = $(this).attr('id'); //наполняем глобальную переменную poly
-		$(this).attr('filter', 'url(#innershadow)').addClass('shadowed');
-	 	return poly;
-	});
+    $('#world_map path').click(function(e) { //при клике на любую страну
+      title = $(this).attr('title');
+      console.log(title);
+      return title;
+    });
 
 
-	$('.send_button').click(function(e){ //при нажатии на кнопку "отправить" создаем объект с ID каждой страны и присвоенным ей цветом
-		let result = $('path').map(function(idx,v){ 
-            return { 
-                [$(v).attr('id')]: $(v).attr('fill') 
+  $('.send_button').click(function(e){ //при нажатии на кнопку "отправить" создаем объект с title каждой области и присвоенным ей цветом
+    let result = $('path').map(function(idx,v){ 
+          if ($(v).attr('title') == 'yellow' || $(v).attr('title') == 'brown' || $(v).attr('title') == 'blue') {
+            return {
+                [$(v).attr('title')]: $(v).attr('fill') 
+              };
             };
         }).get();
         let json =  JSON.stringify(result);      
-		console.log(json);
-	});
+    console.log(json);
+  });
 
 
-	$.support.cors = true; //задаем установки для colorpicker
-	const $button = $('path')
-	const $colorValue = $('.colorValue')
-	$($button).sbxColorChoice({
-		selecionarCor: (color) => {
-	    	$($colorValue).val(color);
-	    	$('#' + poly).attr('fill', color);
-	  	},
-	})
+  $.support.cors = true; //задаем установки для colorpicker
+  const $button = $('path')
+  const $colorValue = $('.colorValue')
+  $($button).sbxColorChoice({
+    selecionarCor: (color) => {
+        $($colorValue).val(color);
+        $('path[title = ' + title + ']').attr('fill', color);
+        title = '';
+      },
+  })
 });
 
 // Init a component
@@ -83,8 +70,6 @@ $.fn.sbxColorChoice = function (params) {
       element.remove();
       openChooseColor = false;
     });
-    console.log(poly);
-    $('#' + poly).removeClass('shadowed').attr('filter', '');
   }
 
   // Function that apply the color selected
@@ -119,7 +104,14 @@ $.fn.sbxColorChoice = function (params) {
 
   // Function that mark where the pallet will open
     const positionElement = (element, e) => {
-      element.find('ul.color-reset li').attr('data-color', '#ffffff');
+      if (title == 'yellow') {
+        element.find('ul.color-reset li').attr('data-color', '#F9DAB4');
+      } else if (title == 'brown') {
+        element.find('ul.color-reset li').attr('data-color', '#9B5D39');
+      } else {
+        element.find('ul.color-reset li').attr('data-color', '#1A7394');
+      }
+      
       element.css({ 'top': top, 'left': left });
   }
 
