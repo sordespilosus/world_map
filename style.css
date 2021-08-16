@@ -1,7 +1,6 @@
 body {
-	background: rgb(230,230,230);
-	background: radial-gradient(circle, rgba(230,230,230,1) 0%, rgba(255,255,255,1) 100%);
-	background-size: cover;
+	background: rgb(212,212,212);
+	background: radial-gradient(circle, rgba(160,160,160,1) 0%, rgba(207,207,207,1) 53%, rgba(220,220,220,1) 100%);
 	height: 100vh;
 	margin:0;
 	display: flex;
@@ -9,6 +8,7 @@ body {
     align-content: center;
     flex-direction: column;
     transition: .5s background ease;
+    width: 100%;
 }
 
 #world_map, .send_button_wrap {
@@ -66,10 +66,72 @@ body {
 	display: flex;
 	justify-content: center;
 	position: absolute;
+	top: 0;
+	left: 100px;
+}
+
+#lang_switch {
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	top: 0;
+	right: 100px;
+
 }
 
 #day, #night {
 	cursor: pointer;
 	font-size: 20px;
 	line-height: 20px;
+}
+
+.btn {
+  border: 3px solid #1a1a1a;
+  display: inline-block;
+  padding: 10px;
+  position: relative;
+  text-align: center;
+  transition: background 600ms ease, color 600ms ease;
+}
+
+input[type=radio].toggle {
+  display: none;
+}
+input[type=radio].toggle + label {
+  cursor: pointer;
+  min-width: 60px;
+}
+input[type=radio].toggle + label:hover {
+  background: none;
+  color: #1a1a1a;
+}
+input[type=radio].toggle + label:after {
+  background: #1a1a1a;
+  content: "";
+  height: 100%;
+  position: absolute;
+  top: 0;
+  transition: left 200ms cubic-bezier(0.77, 0, 0.175, 1);
+  width: 100%;
+  z-index: -1;
+}
+input[type=radio].toggle.toggle-left + label {
+  border-right: 0;
+}
+input[type=radio].toggle.toggle-left + label:after {
+  left: 100%;
+}
+input[type=radio].toggle.toggle-right + label {
+  margin-left: -5px;
+}
+input[type=radio].toggle.toggle-right + label:after {
+  left: -100%;
+}
+input[type=radio].toggle:checked + label {
+  cursor: default;
+  color: #fff;
+  transition: color 200ms;
+}
+input[type=radio].toggle:checked + label:after {
+  left: 0;
 }

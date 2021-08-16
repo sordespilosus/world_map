@@ -11,31 +11,27 @@ $(document).ready(() => {
   });
 
   $('#day').click(function(){
-    $('body').css('background', 'radial-gradient(circle, rgba(230,230,230,1) 0%, rgba(255,255,255,1) 100%)');
+    $('body').css('background', 'radial-gradient(circle, rgba(160,160,160,1) 0%, rgba(207,207,207,1) 53%, rgba(220,220,220,1) 100%)');
     $('#contour').attr('filter', '');
   });
 
+  $('#ru_lang').click(function(){
+    $('path[title *= "eng"]').css('display', 'none');
+    $('path[title *= "rus"]').css('display', 'block');
+  });
+
+  $('#en_lang').click(function(){
+    $('path[title *= "rus"]').css('display', 'none');
+    $('path[title *= "eng"]').css('display', 'block');
+  });
+
 	$('path').attr('fill', '#ffffff'); //устанаваливаем цвет для полигонов, через css это сделать нельзя
+  
 
-	$('#world_map_countries path').hover(
-		function(){
-			$(this).attr('filter', 'url(#innershadow)');
-      country = $(this).attr('title');
-      $offset = $(this).offset();
-      $('.country_label').html('<span>' + country + '</span>').css({'display': 'block', 'top': $offset.top, 'left': $offset.left - $('.country_label').width()  });
-      console.log(country);
-      return;
-		},
+  const string = $(this).attr('title');
+  const substring = 'rus';
 
-		function(){
-			if(!$(this).hasClass('shadowed')) {
-				$(this).attr('filter', '');
-        country = '';
-        $('.country_label').css('display', 'none');
-			}
-      return;
-		}
-	);
+  $('path[title *= "rus"]').css('display', 'none');
 
 	$('.shadowed').mouseout(
 		function(){
