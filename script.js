@@ -134,4 +134,22 @@ $.fn.sbxColorChoice = function (params) {
     left = e.pageX;
     top = e.pageY;
   });
+
+  $('#world_map').mousemove(function(event){  
+  var w = $("#Clip").width();
+  var x = event.pageX - (w / 2);
+  var y = event.pageY - (w / 2);
+  $("#Clip").attr('transform', "translate("+x +","+ y +")");
+  $("#search").attr('transform', "translate("+ (x) +","+ (y) +")");
+  $('.hover-item').hover(function(){
+      var i = $(this).data('index'); 
+      $('.hover-item[data-index="'+ i +'"]').attr('class', 'hover-item active');
+  });
+  
+  });
+  $('.hover-item').click(function(){
+      if($(this).hasClass('active')){
+         alert("clicked");
+      }
+  });
 }

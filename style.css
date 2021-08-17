@@ -135,3 +135,20 @@ input[type=radio].toggle:checked + label {
 input[type=radio].toggle:checked + label:after {
   left: 0;
 }
+
+.svg-wrapper{ 
+    max-height:500px;
+    max-width:1000px;
+    cursor:none;
+    
+  }
+  svg{
+      width:1000px;
+      height:500px;
+    }
+  .hover-item{
+    fill:#000;
+  }
+  .hover-item.active{
+    fill:#ff5000;
+  }
