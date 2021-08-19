@@ -1,4 +1,5 @@
 var title = '';
+var popBlock = true;
 
 $(document).ready(() => {
 
@@ -97,9 +98,9 @@ $.fn.sbxColorChoice = function (params) {
 
   // Function that create modal's effect
   const effectModal = (element) => {
-    element.slideDown('fast', function () {
+      element.slideDown('fast', function () {
       element.focus();
-    });
+      });
   }
 
   // Function that mark where the pallet will open
@@ -116,14 +117,16 @@ $.fn.sbxColorChoice = function (params) {
   }
 
   /*Event click*/
-  $(this).click(function (e) {
+  $(this).mouseup(function (e) {
     if (!openChooseColor) {
       $.get("pickcolor/choose-color.html", function (data) {
         const $element = $(data);
         $('body').append($element);
         $('body').css('overflow', 'hidden');
         positionElement($element, e)
-        effectModal($element)
+        if (popBlock == true){
+          effectModal($element)
+        }
         chooseColor($element, e)
         removePalletColor()
         constumResetTextButton($element)

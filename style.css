@@ -1,7 +1,7 @@
 body {
 	background: rgb(212,212,212);
 	background: radial-gradient(circle, rgba(160,160,160,1) 0%, rgba(207,207,207,1) 53%, rgba(220,220,220,1) 100%);
-	height: 100vh;
+	height: 100%;
 	margin:0;
 	display: flex;
     justify-content: center;
@@ -9,11 +9,29 @@ body {
     flex-direction: column;
     transition: .5s background ease;
     width: 100%;
+    position: relative;
 }
 
-#world_map, .send_button_wrap {
+#world_map {
 	display: flex;
     justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+
+}
+
+svg {
+	width: 100%;
+	height: 100%;
+}
+
+.send_button_wrap {
+	display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    bottom: 30px;
 }
 
 .popup {
@@ -142,10 +160,6 @@ input[type=radio].toggle:checked + label:after {
     cursor:none;
     
   }
-  svg{
-      width:1000px;
-      height:500px;
-    }
   .hover-item{
     fill:#000;
   }

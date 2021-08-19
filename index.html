@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="ru">
 <head>
@@ -8,17 +9,13 @@
   <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
 
   <script src="jquery-3.6.0.min.js"></script>
+  <script src="trash/svg-pan-zoom-master/svg-pan-zoom-master/dist/svg-pan-zoom.js"></script>
   <script src="script.js"></script>
+  
 </head>
 
 <body>
  <div id="world_map">
-  <!--<div id="light_switch">
-    <input id="day" class="toggle toggle-left" name="toggle" value="false" type="radio" checked>
-    <label for="day" class="btn"><i class="fa fa-sun-o" aria-hidden="true"></i></label>
-    <input id="night" class="toggle toggle-right" name="toggle" value="true" type="radio">
-    <label for="night" class="btn"><i class="fa fa-moon-o" aria-hidden="true"></i></label>
-  </div>-->
   <div id="lang_switch">
     <input id="ru_lang" class="toggle toggle-left" name="lang" value="true" type="radio">
     <label for="ru_lang" class="btn">RU</label>
@@ -27,56 +24,13 @@
   </div>
 <?xml version="1.0" encoding="utf-8"?>
 <svg
+   id="world_map_body"
    xmlns:mapsvg="http://mapsvg.com"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   mapsvg:geoViewBox="-169.110266 83.600842 190.486279 -58.508473"
-   width="1009.6727"
-   height="665.96301">
-<defs>
-     <filter id="innershadow" x0="-50%" y0="-50%" width="200%" height="200%">
-       <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur"></feGaussianBlur>
-       <feOffset dy="1" dx="2"></feOffset>
-       <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowDiff"></feComposite>
-       
-       <feFlood flood-color="#000000" flood-opacity="0.75"></feFlood>
-       <feComposite in2="shadowDiff" operator="in"></feComposite>
-       <feComposite in2="SourceGraphic" operator="over" result="firstfilter"></feComposite>
-       
-       <feGaussianBlur in="firstfilter" stdDeviation="2" result="blur2"></feGaussianBlur>
-       <feOffset dy="-1" dx="-2"></feOffset>
-       <feComposite in2="firstfilter" operator="arithmetic" k2="-1" k3="1" result="shadowDiff"></feComposite>
-       
-       <feFlood flood-color="#000000" flood-opacity="0.35"></feFlood>
-       <feComposite in2="shadowDiff" operator="in"></feComposite>
-       <feComposite in2="firstfilter" operator="over"></feComposite>
-     <filter>
-
-      
-
-    <filter id="sofGlow" height="300%" width="300%" x="-75%" y="-75%">
-      <!-- Thicken out the original shape -->
-      <feMorphology operator="dilate" radius="2" in="SourceAlpha" result="thicken" />
-
-      <!-- Use a gaussian blur to create the soft blurriness of the glow -->
-      <feGaussianBlur in="thicken" stdDeviation="10" result="blurred" />
-
-      <!-- Change the colour -->
-      <feFlood flood-color="rgb(255,255,153)" result="glowColor" />
-
-      <!-- Color in the glows -->
-      <feComposite in="glowColor" in2="blurred" operator="in" result="softGlow_colored" />
-
-      <!--  Layer the effects together -->
-      <feMerge>
-        <feMergeNode in="softGlow_colored"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-
-   </defs>
+   ViewBox="0 0 1000 643">
    
 <style type="text/css">
   .st0{fill:fill="#F9DAB4";}
@@ -90,6 +44,7 @@
   .st8{fill:none;stroke:#1A1A18;stroke-width:0.216;stroke-linejoin:bevel;stroke-miterlimit:22.9256;}
   .st9{fill:none;stroke:#1A1A18;stroke-width:0.216;stroke-miterlimit:22.9256;}
 </style>
+<g class="svg-pan-zoom_viewport">
 <g id="Layer_1_1_">
   <path title="yellow" fill="#F9DAB4" d="M596.4,289.9c1.9,2.3,3.6,4.7,1.3,7.3c-4.4,5.3-2.7,5.9-0.2,11.8c1.5,3.5,2.1,7-2.8,3.9
     c-4.8-3-8.4-4.8-14-5.9c-2.4-0.5-3.8-1-4.9-1.6c-1.3-0.6-2.1-1.4-4.2-2.6c-0.6-0.5-1.2-1.3-1.7-1.8c-1.4-1.2-1.2-1.2-0.1-2.3
@@ -23963,12 +23918,53 @@
     c-0.2,0.6-0.6,1.8-0.9,2.5c-0.6,1.6-0.5,2.9-0.1,4.6c0.5,1.9,1.5,2.7,3.4,1.7c1.7-0.9,2.4-2.9,1.6-4.7
     C687.3,413.2,687,412.8,686.7,412.3z"/>
 </g>
+</g>
 </svg>
-</div> 
-<div class="send_button_wrap">
-<input type="button" class="send_button" value="отправить" />
-</div>
+
+
+
+
+
+ </div> 
+
+
+
+ <div class="send_button_wrap">
+
+  <input type="button" class="send_button" value="отправить" />
+
+ </div>
+
 <div class="colorDisplay"></div>
+
 <input class="colorValue" type="hidden" name="">
+
+<script>
+    $(document).ready(() => {
+    window.panZoom = svgPanZoom('#world_map_body', {
+      viewportSelector: '.svg-pan-zoom_viewport'
+    , panEnabled: true
+    , controlIconsEnabled: false
+    , zoomEnabled: true
+    , dblClickZoomEnabled: false
+    , mouseWheelZoomEnabled: true
+    , preventMouseEventsDefault: true
+    , zoomScaleSensitivity: 0.2
+    , minZoom: 0.5
+    , maxZoom: 10
+    , fit: true
+    , contain: false
+    , center: true
+    , onPan: function(){
+      popBlock = false;
+      $('svg').mouseup(function(){
+        popBlock = true;
+      });
+    }
+    });
+  });
+  </script>
+
 </body>
+
 </html>
