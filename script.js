@@ -1,17 +1,6 @@
 var title = '';
-var popBlock = true;
 
 $(document).ready(() => {
-
-  $('#night').click(function(){
-    $('body').css('background', 'radial-gradient(circle, rgba(43,34,105,1) 0%, rgba(2,0,59,1) 100%)');
-    $('#contour').attr('filter', 'url(#sofGlow)');
-  });
-
-  $('#day').click(function(){
-    $('body').css('background', 'radial-gradient(circle, rgba(160,160,160,1) 0%, rgba(207,207,207,1) 53%, rgba(220,220,220,1) 100%)');
-    $('#contour').attr('filter', '');
-  });
 
   $('#ru_lang').click(function(){
     $('path[title *= "eng"]').css('display', 'none');
@@ -27,14 +16,13 @@ $(document).ready(() => {
 
     $('#world_map path').click(function(e) { //при клике на любую страну
       title = $(this).attr('title');
-      console.log(title);
       return title;
     });
 
 
   $('.send_button').click(function(e){ //при нажатии на кнопку "отправить" создаем объект с title каждой области и присвоенным ей цветом
     let result = $('path').map(function(idx,v){ 
-          if ($(v).attr('title') == 'yellow' || $(v).attr('title') == 'brown' || $(v).attr('title') == 'blue') {
+          if ($.inArray($(v).attr('title'), ['yellow', 'brown', 'blue'])) {
             return {
                 [$(v).attr('title')]: $(v).attr('fill') 
               };
@@ -84,7 +72,7 @@ $.fn.sbxColorChoice = function (params) {
 
   // Function that reset color
   const removePalletColor = () => {
-    if (removePallet != '' && removePallet != undefined) {
+    if (removePallet !== '' && removePallet !== undefined) {
       $('body').find(removePallet).remove();
     }
   }
@@ -105,9 +93,9 @@ $.fn.sbxColorChoice = function (params) {
 
   // Function that mark where the pallet will open
     const positionElement = (element, e) => {
-      if (title == 'yellow') {
+      if (title === 'yellow') {
         element.find('ul.color-reset li').attr('data-color', '#F9DAB4');
-      } else if (title == 'brown') {
+      } else if (title === 'brown') {
         element.find('ul.color-reset li').attr('data-color', '#9B5D39');
       } else {
         element.find('ul.color-reset li').attr('data-color', '#1A7394');
@@ -117,25 +105,22 @@ $.fn.sbxColorChoice = function (params) {
   }
 
   /*Event click*/
-  $(this).mouseup(function (e) {
-    if (!openChooseColor) {
-      $.get("pickcolor/choose-color.html", function (data) {
-        const $element = $(data);
-        $('body').append($element);
-        $('body').css('overflow', 'hidden');
-        positionElement($element, e)
-        if (popBlock == true){
+  $(this).dblclick(function (e) {
+      if (!openChooseColor) {
+        $.get("pickcolor/choose-color.html", function (data) {
+          const $element = $(data);
+          $('body').append($element).css('overflow', 'hidden');
+          positionElement($element, e)
           effectModal($element)
-        }
-        chooseColor($element, e)
-        removePalletColor()
-        constumResetTextButton($element)
-        $element.focusout(() => closeChooseColor($element));
-        openChooseColor = true;
-      });
-    }
-    left = e.pageX;
-    top = e.pageY;
+          chooseColor($element, e)
+          removePalletColor()
+          constumResetTextButton($element)
+          $element.focusout(() => closeChooseColor($element));
+          openChooseColor = true;
+        });
+      }
+      left = e.pageX;
+      top = e.pageY;
   });
 
   $('#world_map').mousemove(function(event){  
@@ -145,8 +130,7 @@ $.fn.sbxColorChoice = function (params) {
   $("#Clip").attr('transform', "translate("+x +","+ y +")");
   $("#search").attr('transform', "translate("+ (x) +","+ (y) +")");
   $('.hover-item').hover(function(){
-      var i = $(this).data('index'); 
-      $('.hover-item[data-index="'+ i +'"]').attr('class', 'hover-item active');
+      $('.hover-item[data-index="'+ $(this).data('index') +'"]').attr('class', 'hover-item active');
   });
   
   });
@@ -155,4 +139,21 @@ $.fn.sbxColorChoice = function (params) {
          alert("clicked");
       }
   });
+
+  window.panZoom = svgPanZoom('#world_map_body', {
+    viewportSelector: '.svg-pan-zoom_viewport',
+    panEnabled: true,
+    controlIconsEnabled: false,
+    zoomEnabled: true,
+    dblClickZoomEnabled: false,
+    mouseWheelZoomEnabled: true,
+    preventMouseEventsDefault: false,
+    zoomScaleSensitivity: 0.2,
+    minZoom: 0.5,
+    maxZoom: 10,
+    fit: true,
+    contain: false,
+    center: true
+  });
+
 }

@@ -23939,32 +23939,5 @@
 
 <input class="colorValue" type="hidden" name="">
 
-<script>
-    $(document).ready(() => {
-    window.panZoom = svgPanZoom('#world_map_body', {
-      viewportSelector: '.svg-pan-zoom_viewport'
-    , panEnabled: true
-    , controlIconsEnabled: false
-    , zoomEnabled: true
-    , dblClickZoomEnabled: false
-    , mouseWheelZoomEnabled: true
-    , preventMouseEventsDefault: true
-    , zoomScaleSensitivity: 0.2
-    , minZoom: 0.5
-    , maxZoom: 10
-    , fit: true
-    , contain: false
-    , center: true
-    , onPan: function(){
-      popBlock = false;
-      $('svg').mouseup(function(){
-        popBlock = true;
-      });
-    }
-    });
-  });
-  </script>
-
 </body>
-
 </html>
